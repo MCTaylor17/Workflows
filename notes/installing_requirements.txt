@@ -18,4 +18,17 @@ gem install compass
 
 
 
-create
+git remote add origin https://github.com/MCTaylor17/Workflows.git
+git push -u origin master
+
+git add .
+git status
+git commit -m "commit message"
+
+
+npm install --save-dev gulp
+npm install --save-dev gulp-util
+
+npm install --save-dev gulp-coffee
+
+

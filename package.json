@@ -17,5 +17,10 @@
     "browserify"
   ],
   "author": "Mike Taylor",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "gulp-coffee": "^2.1.2",
+    "gulp-util": "^3.0.0"
+  }
 }
