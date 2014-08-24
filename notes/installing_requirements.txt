@@ -1,0 +1,21 @@
+Workflows
+
+
+Node.js:
+
+npm install -g gulp
+npm install -g browserify
+
+npm init
+
+Ruby:
+
+gem update
+
+gem install sass
+
+gem install compass
+
+
+
+create
