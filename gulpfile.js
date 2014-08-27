@@ -1,6 +1,8 @@
 var gulp = require("gulp"),
 	gutil = require("gulp-util"),
-	coffee = require("gulp-coffee");
+	coffee = require("gulp-coffee"),
+	browserify = require("gulp-browserify"),
+	concat = require("gulp-concat");
 
 gulp.task("log",function(){
 	gutil.log("what the holy fuck?");
@@ -14,7 +16,21 @@ gulp.task("coffee", function(){
 		.pipe(coffee( {bare: true} )
 			.on( "error", gutil.log )
 		)
-	.pipe(gulp.dest("components/scripts"))
-	
-		
+	.pipe(gulp.dest("components/scripts"));
 });
+
+var jsSources = [
+	"components/scripts/rclick.js",
+	"components/scripts/pixgrid.js",
+	"components/scripts/tagline.js",
+	"components/scripts/template.js"
+];
+
+gulp.task("js", function(){
+	gulp.src(jsSources)
+		.pipe(concat("script.js"))
+		.pipe(browserify())
+		.pipe(gulp.dest("builds/development/js"))
+});
+		
+		

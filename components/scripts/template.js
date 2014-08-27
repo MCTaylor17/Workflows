@@ -8,3 +8,5 @@ $(function() {
   }); //getJSON
   
 }); //function
+
+// require jquery not used because it's declared in coffee
