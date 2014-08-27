@@ -1,8 +1,10 @@
+// Gulp Objects
 var gulp = require("gulp"),
 	gutil = require("gulp-util"),
 	coffee = require("gulp-coffee"),
 	browserify = require("gulp-browserify"),
-	concat = require("gulp-concat");
+	concat = require("gulp-concat"),
+	compass = require("gulp-compass");
 
 gulp.task("log",function(){
 	gutil.log("what the holy fuck?");
@@ -19,6 +21,7 @@ gulp.task("coffee", function(){
 	.pipe(gulp.dest("components/scripts"));
 });
 
+// Then 
 var jsSources = [
 	"components/scripts/rclick.js",
 	"components/scripts/pixgrid.js",
@@ -32,5 +35,23 @@ gulp.task("js", function(){
 		.pipe(browserify())
 		.pipe(gulp.dest("builds/development/js"))
 });
-		
-		
+
+var sassSources = ["components/sass/style.scss"];
+
+gulp.task("compass",function() {
+	gulp.src(sassSources)
+		.pipe(compass({
+			sass: "components/sass",
+			image: "_builds/development/images",
+			style: "expanded"
+		}))
+		.pipe(gulp.dest("builds/development/css"))
+});
+
+
+gulp.task("watch",function(){
+	gulp.watch(coffeeSources, ["coffee"])
+	gulp.watch(jsSources, ["js"])
+	gulp.watch("components/sass/*.scss", ["compass"])
+});
+gulp.task("default",["coffee","js","compass","watch"]);
