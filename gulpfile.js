@@ -7,12 +7,14 @@ gulp.task("log",function(){
 	
 });
 
-
+var coffeeSources = ["components/coffee/tagline.coffee"];
 
 gulp.task("coffee", function(){
-	gulp.src("components/coffee/tagline.coffee")
-		.pipe(coffee( {bare: true} ).on( "error", gutil.log )).pipe(gulp.dest("components/scripts"))
+	gulp.src(coffeeSources)
+		.pipe(coffee( {bare: true} )
+			.on( "error", gutil.log )
+		)
+	.pipe(gulp.dest("components/scripts"))
 	
 		
 });
-//var $gulpFiles = ["
