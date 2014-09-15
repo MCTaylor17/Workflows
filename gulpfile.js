@@ -4,6 +4,7 @@ var gulp = require("gulp"),
 	coffee = require("gulp-coffee"),
 	browserify = require("gulp-browserify"),
 	concat = require("gulp-concat"),
+	webserver = require("gulp-webserver"),
 	compass = require("gulp-compass");
 
 gulp.task("log",function(){
@@ -34,6 +35,7 @@ gulp.task("js", function(){
 		.pipe(concat("script.js"))
 		.pipe(browserify())
 		.pipe(gulp.dest("builds/development/js"))
+		//.pipe(webserver.reload())
 });
 
 var sassSources = ["components/sass/style.scss"];
@@ -46,6 +48,7 @@ gulp.task("compass",function() {
 			style: "expanded"
 		}))
 		.pipe(gulp.dest("builds/development/css"))
+		//.pipe(webserver.reload())
 });
 
 
@@ -54,4 +57,13 @@ gulp.task("watch",function(){
 	gulp.watch(jsSources, ["js"])
 	gulp.watch("components/sass/*.scss", ["compass"])
 });
-gulp.task("default",["coffee","js","compass","watch"]);
+
+gulp.task('webserver', function() {
+  gulp.src(__dirname + "builds/develolpment")
+    .pipe(webserver({
+      livereload: true,
+      open: true
+    }));
+});
+
+gulp.task("default",["coffee","js","compass","webserver","watch"]);
