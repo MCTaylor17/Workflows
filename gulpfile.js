@@ -5,6 +5,7 @@ var gulp = require("gulp"),
 	browserify = require("gulp-browserify"),
 	concat = require("gulp-concat"),
 	webserver = require("gulp-webserver"),
+	connect = require("gulp-connect"),
 	compass = require("gulp-compass");
 
 gulp.task("log",function(){
@@ -35,7 +36,7 @@ gulp.task("js", function(){
 		.pipe(concat("script.js"))
 		.pipe(browserify())
 		.pipe(gulp.dest("builds/development/js"))
-		//.pipe(webserver.reload())
+		.pipe(connect.reload())
 });
 
 var sassSources = ["components/sass/style.scss"];
@@ -48,22 +49,43 @@ gulp.task("compass",function() {
 			style: "expanded"
 		}))
 		.pipe(gulp.dest("builds/development/css"))
-		//.pipe(webserver.reload())
+		.pipe(connect.reload())
 });
 
 
 gulp.task("watch",function(){
-	gulp.watch(coffeeSources, ["coffee"])
-	gulp.watch(jsSources, ["js"])
-	gulp.watch("components/sass/*.scss", ["compass"])
+	gulp.watch(coffeeSources, ["coffee"]),
+	gulp.watch(jsSources, ["js"]),
+	gulp.watch("components/sass/*.scss", ["compass"]),
+	gulp.watch(htmlSources,["html"])
 });
 
+// ----------------------------------------
+//[BUG]: Livereload seems to crash the app.
+gulp.task("connect",function(){
+	connect.server({
+		livereload: true,
+		root: "builds/development/",
+	})
+});
+/*
 gulp.task('webserver', function() {
-  gulp.src(__dirname + "builds/develolpment")
+  gulp.src("./builds/develolpment/")
     .pipe(webserver({
       livereload: true,
       open: true
     }));
 });
+*/
+var htmlSources = ["build/development/*.html"];
 
-gulp.task("default",["coffee","js","compass","webserver","watch"]);
+gulp.task("html",function(){
+	gulp.src(htmlSources)
+	.pipe(connect.reload())
+	
+	// add this to default after connect/webserver bug solved
+	// add jsonSources = builds/development/json whatever
+});
+	
+
+gulp.task("default",["coffee","js","compass","watch","connect"]);

@@ -8,5 +8,9 @@ $(function() {
   }); //getJSON
   
 }); //function
-
+ 
+window.load(function(){
+	
+	$("img").hide();
+});
 // require jquery not used because it's declared in coffee

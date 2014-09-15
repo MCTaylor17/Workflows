@@ -91,7 +91,11 @@ $(function() {
   }); //getJSON
   
 }); //function
-
+ 
+window.load(function(){
+	
+	$("img").hide();
+});
 // require jquery not used because it's declared in coffee
 },{"jquery":2,"mustache":3}],2:[function(require,module,exports){
 /*!
